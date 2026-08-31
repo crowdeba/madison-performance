@@ -374,7 +374,7 @@ var CONFIG = {
   program: {
     1: {
       mon: {label:"Lower + Pull", note:"Madison already knows how to lift, so this isn't about teaching basic movements — it's building a foundation for strength, body awareness, shoulder/knee durability, single-leg control, core control, and explosive movement. Cross country keeps lower-body volume controlled through November. Leave here feeling productive and athletic, not exhausted.", exercises:[
-        {type:"sets", name:"Back Squat", sets:["6","6","6"], rest:"2 min", cue:"Controlled depth — form over load."},
+        {type:"sets", name:"Split Squat", sets:["6/leg","6/leg","6/leg"], rest:"2 min", cue:"Controlled depth, both legs — form over load."},
         {type:"sets", name:"Single-Leg RDL", sets:["8/leg","8/leg"], rest:"90 sec", cue:"Balance and body awareness — controlled."},
         {type:"sets", name:"Lat Pulldown", sets:["8","8","8"], rest:"90 sec", cue:"Full range, controlled tempo."},
         {type:"sets", name:"Chest-Supported Row", sets:["8","8","8"], rest:"75 sec", cue:"Strong upper-back squeeze."},
@@ -400,7 +400,8 @@ var CONFIG = {
     },
     2: {
       mon: {label:"Lower + Pull", note:"Phase 1 built the foundation — now reps come down and loads go up to build real, measurable strength. Foundation to strength to the beginning of power development. Squat strength, pull-up ability, and upper-body strength should all be moving.", exercises:[
-        {type:"sets", name:"Back Squat", sets:["5","5","5"], rest:"2.5-3 min", cue:"Progressive loading — excellent form stays the priority."},
+        {type:"sets", name:"Split Squat", sets:["5/leg","5/leg","5/leg"], rest:"2.5-3 min", cue:"Progressive loading — excellent form stays the priority."},
+        {type:"sets", name:"DB High Pull", sets:["6","6","6"], rest:"75 sec", cue:"Explosive hip drive into a fast pull, elbows high — this is the foundation of the clean technique you want to learn. Once this feels sharp and controlled, that's the green light to work on full clean technique with a coach."},
         {type:"sets", name:"Single-Leg RDL", sets:["6/leg","6/leg","6/leg"], rest:"90 sec", cue:"Challenge balance without losing position."},
         {type:"pullup", name:"Pull-Ups / Assisted Pull-Ups", sets:3, rest:"90 sec", cue:"Gradually reduce assistance if needed. Aim for 5-6 reps."},
         {type:"sets", name:"Chest-Supported Row", sets:["6-8","6-8","6-8"], rest:"75 sec", cue:"Strong upper-back contraction."},
@@ -413,7 +414,7 @@ var CONFIG = {
         {type:"sets", name:"Lat Pulldown", sets:["6-8","6-8","6-8"], rest:"75 sec", cue:"Strong pull, controlled return."},
         {type:"sets", name:"Single-Arm Cable Row", sets:["6/side","6/side","6/side"], rest:"60 sec", cue:"Powerful but controlled."},
         {type:"sets", name:"Face Pulls", sets:["10-12","10-12"], rest:"45 sec", cue:"Shoulder durability."},
-        {type:"sets", name:"Bird Dog", sets:["8/side","8/side"], rest:"45 sec", cue:"Excellent trunk control."}
+        {type:"sets", name:"TRX Plank", sets:[":30",":30"], rest:"45 sec", cue:"Feet in the straps, forearms down — real core control under instability."}
       ]},
       fri: {label:"Full Body + Athletic", note:"Box jumps enter here as a more vertical explosive movement, alongside jump rope for coordination. Still pre-practice — quality over volume.", exercises:[
         {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Controlled, progressively heavier."},
@@ -427,7 +428,7 @@ var CONFIG = {
     },
     3: {
       mon: {label:"Lower Power + Pull", note:"This isn't about lifting heavier — it's about producing force quickly. Learn movement + build foundation, then build strength + introduce power, now express strength quickly. Strength leads to rate of force development leads to coordination leads to explosive movement — the pathway to better starts, turns, underwaters, and sprinting.", exercises:[
-        {type:"contrast", name:"Back Squat &rarr; Box Jump", rounds:3, liftReps:"4", jumpReps:"3", restBetween:"20-30 sec", restRounds:"2 min", cue:"Controlled, strong squat reps, then an explosive jump immediately after — low volume, full quality."},
+        {type:"contrast", name:"Split Squat &rarr; Box Jump", rounds:3, liftReps:"4/leg", jumpReps:"3", restBetween:"20-30 sec", restRounds:"2 min", cue:"Controlled, strong split squat reps, then an explosive jump immediately after — low volume, full quality."},
         {type:"sets", name:"Single-Leg RDL", sets:["6/leg","6/leg"], rest:"90 sec", cue:"Maintain balance and control."},
         {type:"sets", name:"Pull-Ups", sets:["5","5","5"], rest:"90 sec", cue:"Clean, controlled reps."},
         {type:"sets", name:"Chest-Supported Row", sets:["6","6","6"], rest:"75 sec", cue:"Strong, fast pull — controlled return."},
@@ -454,7 +455,7 @@ var CONFIG = {
     }
   },
 
-  progressLifts: ["Back Squat","Flat DB Bench Press","Broad Jump","Box Jump","Chest-Supported Row"]
+  progressLifts: ["Split Squat","Flat DB Bench Press","Broad Jump","Box Jump","Chest-Supported Row"]
 };
 /* ========================= END COACH-EDITABLE SECTION ===================== */
 
