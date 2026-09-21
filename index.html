@@ -410,11 +410,12 @@ var CONFIG = {
         {type:"sets", name:"Bird Dog", sets:["8/side","8/side"], rest:"45 sec", cue:"Slow — maintain trunk control."}
       ]},
       fri: {label:"Full Body + Athletic", note:"This session lands before practice, so explosive work here stays low-volume and controlled — the point is exposure to fast, high-quality movement, not fatigue heading into the pool.", exercises:[
-        {type:"sets", name:"Leg Extension", sets:["10","10"], rest:"60 sec", cue:"Controlled — knee-strengthening emphasis."},
+        {type:"sets", name:"Goblet Squat", sets:["8","8"], rest:"90 sec", cue:"Controlled depth, moderate load — real strength work, still fresh for practice."},
         {type:"sets", name:"DB Incline Press", sets:["8","8","8"], rest:"90 sec", cue:"Strong lockout."},
+        {type:"sets", name:"Seated Cable Row", sets:["8","8","8"], rest:"75 sec", cue:"Squeeze your shoulder blades together — real pulling strength, moderate effort."},
         {type:"sets", name:"Tricep Pushdown", sets:["8","8","8"], rest:"60 sec", cue:"Control and full range of motion."},
         {type:"sets", name:"Hip Abductor", sets:["10","10"], rest:"60 sec", cue:"Moderate weight, controlled."},
-        {type:"sets", name:"Medicine Ball Rotational Throw", sets:["4/side","4/side","4/side"], rest:"60 sec", cue:"Explosive — quality over quantity."},
+        {type:"sets", name:"Cable Woodchop", sets:["8/side","8/side","8/side"], rest:"60 sec", cue:"Explosive rotation through your core, controlled return."},
         {type:"sets", name:"Broad Jumps (Low Volume)", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full reset between jumps. Pre-practice — stay controlled, not exhausting."}
       ]}
     },
@@ -439,9 +440,10 @@ var CONFIG = {
       fri: {label:"Full Body + Athletic", note:"Box jumps enter here as a more vertical explosive movement, alongside jump rope for coordination. Still pre-practice — quality over volume.", exercises:[
         {type:"sets", name:"Leg Press", sets:["6","6","6"], rest:"2 min", cue:"Controlled, progressively heavier."},
         {type:"sets", name:"DB Incline Press", sets:["6","6","6"], rest:"90 sec", cue:"Strong lockout."},
+        {type:"sets", name:"Seated Cable Row", sets:["8","8","8"], rest:"75 sec", cue:"Squeeze your shoulder blades together — real pulling strength."},
         {type:"sets", name:"Tricep Pushdown", sets:["8","8"], rest:"60 sec", cue:"Controlled, full range."},
         {type:"superset", name:"Hip Abductor + Adductor", rounds:2, rest:"60 sec after each round", cue:"Controlled, moderate weight — abductor straight into adductor, no rest between."},
-        {type:"sets", name:"Medicine Ball Rotational Throw", sets:["4/side","4/side","4/side"], rest:"60-90 sec", cue:"Maximum intent — stop before fatigue."},
+        {type:"sets", name:"Cable Woodchop", sets:["8/side","8/side","8/side"], rest:"60-90 sec", cue:"Maximum intent through the rotation — stop before fatigue."},
         {type:"sets", name:"Box Jumps", sets:["3","3","3"], rest:"90 sec", cue:"Explosive, full recovery between jumps."},
         {type:"sets", name:"Jump Rope", sets:[":30",":30"], rest:"30 sec", cue:"Quick, light contacts — coordination."}
       ]}
@@ -464,9 +466,10 @@ var CONFIG = {
         {type:"sets", name:"Bird Dog", sets:["6/side","6/side"], rest:"45 sec", cue:"Slow — perfect control."}
       ]},
       fri: {label:"Full Body + Athletic", note:"Still pre-practice — the explosive work here is about teaching your body to produce force quickly, not about maximum fatigue. Full recovery between reps matters more than volume.", exercises:[
-        {type:"sets", name:"Medicine Ball Slam", sets:["4","4","4"], rest:"60-90 sec", cue:"Maximum intent — reset completely between reps."},
+        {type:"sets", name:"Kettlebell Swing", sets:["10","10","10"], rest:"60-90 sec", cue:"Explosive hip drive, not an arm raise — reset completely between reps."},
         {type:"sets", name:"Broad Jump", sets:["3","3","3"], rest:"90 sec", cue:"Horizontal power, full reset. Pre-practice — stay explosive but controlled."},
         {type:"sets", name:"DB Incline Press", sets:["5","5","5"], rest:"90 sec", cue:"Explosive intent."},
+        {type:"sets", name:"Seated Cable Row", sets:["6","6","6"], rest:"75 sec", cue:"Squeeze your shoulder blades together, controlled pace."},
         {type:"sets", name:"Hip Thrust", sets:["5","5","5"], rest:"90 sec", cue:"Powerful lockout."},
         {type:"sets", name:"Tricep Pushdown", sets:["8","8"], rest:"60 sec", cue:"Controlled."},
         {type:"superset", name:"Hip Abductor + Adductor", rounds:2, rest:"60 sec after each round", cue:"Controlled, moderate weight."},
@@ -595,7 +598,10 @@ var CONFIG = {
   async function renderCoachMessageBanner(){
     var el = document.getElementById('coach-message-banner');
     if (!el) return;
-    var res = await sb.from('coach_messages').select('id,message,created_at').order('created_at', {ascending:false}).limit(1);
+    var scopedId = await resolveSiteAthleteId();
+    var res = await sb.from('coach_messages').select('id,message,created_at,target_athlete_id')
+      .or('target_athlete_id.is.null' + (scopedId ? ',target_athlete_id.eq.' + scopedId : ''))
+      .order('created_at', {ascending:false}).limit(1);
     if (res.error || !res.data || !res.data.length) return;
     var latest = res.data[0];
     var dismissedId = null;
@@ -626,7 +632,10 @@ var CONFIG = {
     list.style.display = 'block';
     if (label) label.textContent = 'Hide';
     if (pastMessagesLoaded) return;
-    var res = await sb.from('coach_messages').select('message,created_at').order('created_at', {ascending:false}).limit(20);
+    var scopedId = await resolveSiteAthleteId();
+    var res = await sb.from('coach_messages').select('message,created_at,target_athlete_id')
+      .or('target_athlete_id.is.null' + (scopedId ? ',target_athlete_id.eq.' + scopedId : ''))
+      .order('created_at', {ascending:false}).limit(20);
     if (res.error){ list.innerHTML = '<p class="small">Could not load messages.</p>'; return; }
     if (!res.data.length){ list.innerHTML = '<p class="small">No messages yet.</p>'; return; }
     var html = '';
@@ -1482,8 +1491,34 @@ var CONFIG = {
   };
 
   // ---------------- INIT ----------------
+  async function backfillExerciseCounts(){
+    if (!auth.athleteId) return;
+    try {
+      var res = await sb.from('workouts').select('id,phase,workout_type').eq('athlete_id', auth.athleteId).eq('completed', true).is('exercises_planned', null);
+      if (res.error || !res.data || !res.data.length) return;
+      for (var i=0;i<res.data.length;i++){
+        var w = res.data[i];
+        var dayObj = CONFIG.program[w.phase] && CONFIG.program[w.phase][w.workout_type];
+        var exercises = (dayObj && dayObj.exercises) || [];
+        if (!exercises.length) continue;
+        var setsRes = await sb.from('workout_sets').select('exercise').eq('workout_id', w.id);
+        var loggedNames = {};
+        (setsRes.data||[]).forEach(function(s){ loggedNames[s.exercise] = true; });
+        var planned = 0, completed = 0;
+        exercises.forEach(function(ex){
+          var cue = (ex.cue||'').toLowerCase();
+          if (cue.indexOf('optional') > -1) return;
+          planned++;
+          if (loggedNames[ex.name] || loggedNames[ex.name+' (1st)'] || loggedNames[ex.name+' (2nd)']) completed++;
+        });
+        await sb.from('workouts').update({ exercises_planned: planned, exercises_completed: completed }).eq('id', w.id);
+      }
+    } catch(e){}
+  }
+
   function initDashboard(){
     renderHome();
+    backfillExerciseCounts();
     var todayBlock = getPhaseBlock(todayMid());
     selectPhase(todayBlock ? todayBlock.phase : 1);
     var wd = todayMid().getDay();
