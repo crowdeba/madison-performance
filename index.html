@@ -380,7 +380,7 @@ var CONFIG = {
 
   tapers: [
     {start:"2026-11-04", end:"2026-11-05", label:"Taper: Fort Wayne Invite"},
-    {start:"2026-12-08", end:"2026-12-10", label:"Taper: Midseason Meet"}
+    {start:"2026-12-03", end:"2026-12-10", label:"Taper: Midseason Meet"}
   ],
 
   // A "modified" entry that has a plan{} shows that exact reduced workout, with weight targets worked out
@@ -467,7 +467,228 @@ var CONFIG = {
         ]
       }},
     {start:"2026-11-13", end:"2026-11-13", mode:"no-lift", label:"No Lift — Mason Meet"},
-    {start:"2026-12-11", end:"2026-12-11", mode:"no-lift", label:"No Lift — Midseason Meet"},
+    // Fri Dec 11: no lift. Primer is optional and only for athletes who do not swim Friday night.
+    // Holiday Classic taper (race Fri Dec 11): taper starts Thu Dec 3, lifts get lighter each time, last lift is Wed Dec 9, restart after the meet.
+    {start:"2026-12-04", end:"2026-12-04", mode:"modified", label:"Taper Lift — Midseason Meet",
+      plan:{
+        "chip": "Taper Lift",
+        "title": "Taper Lift",
+        "intro": "The taper starts this week, so today's lift is a little lighter: about two-thirds of the normal sets. Keep the weight close to normal (your targets are on each exercise), stop every set with 3 or more reps left, and move the bar fast and crisp. You should walk out feeling better than when you walked in.",
+        "dropped": [
+          "Tricep Pushdown",
+          "Hip Abductor + Adductor",
+          "Jump Rope"
+        ],
+        "homeNote": "about two-thirds of the normal sets at near-normal weight. Open it that day to see your exact weights.",
+        "exercises": [
+          {
+            "name": "Leg Press",
+            "sets": 3,
+            "loadPct": 90
+          },
+          {
+            "name": "DB Incline Press",
+            "sets": 3,
+            "loadPct": 90
+          },
+          {
+            "name": "Seated Cable Row",
+            "sets": 3,
+            "loadPct": 95
+          },
+          {
+            "name": "Cable Woodchop",
+            "sets": 3,
+            "noTarget": true,
+            "hint": "Same as normal."
+          },
+          {
+            "name": "Box Jumps",
+            "sets": 3,
+            "noTarget": true,
+            "hint": "Same effort as normal. Smaller jumps are fine. Quality only, stop if landings get sloppy."
+          }
+        ]
+      }},
+    {start:"2026-12-07", end:"2026-12-07", mode:"modified", label:"Taper Lift — Midseason Meet",
+      plan:{
+        "chip": "Taper Lift",
+        "title": "Taper Lift",
+        "intro": "Racing is getting close, so today's lift is lighter again: about two-thirds of the normal sets. Keep the weight close to normal (your targets are on each exercise), stop every set with 3 or more reps left, and move the bar fast and crisp. The goal is to feel sharp for racing, not worked.",
+        "dropped": [
+          "Hamstring Curl",
+          "Calf Raises"
+        ],
+        "homeNote": "about two-thirds of the normal sets at near-normal weight. Open it that day to see your exact weights.",
+        "exercises": [
+          {
+            "name": "Box Jumps (Low Volume)",
+            "sets": 3,
+            "noTarget": true,
+            "hint": "Same effort as normal. Smaller jumps are fine. Quality only, stop if landings get sloppy."
+          },
+          {
+            "name": "Split Squat",
+            "sets": 3,
+            "loadPct": 85
+          },
+          {
+            "name": "DB High Pull",
+            "sets": 2,
+            "loadPct": 85
+          },
+          {
+            "name": "Single-Leg RDL",
+            "sets": 2,
+            "loadPct": 85
+          },
+          {
+            "name": "Pull-Ups / Assisted Pull-Ups",
+            "type": "pullup",
+            "sets": 2
+          },
+          {
+            "name": "Chest-Supported Row",
+            "sets": 2,
+            "loadPct": 90
+          }
+        ]
+      }},
+    {start:"2026-12-09", end:"2026-12-09", mode:"modified", label:"Meet-Week Lift — Midseason Meet",
+      plan:{
+        "chip": "Meet-Week Lift",
+        "title": "Meet-Week Lift",
+        "intro": "Racing is close and this is your last lift before the meet: about half of the normal sets. Keep the weight close to normal (your targets are on each exercise), stop every set with 3 or more reps left, and move the bar fast and crisp. The goal is to feel sharp for racing, not worked. Plus a short jump touch to keep your power sharp.",
+        "dropped": [
+          "Single-Arm Cable Row",
+          "TRX Plank"
+        ],
+        "homeNote": "about half of the normal sets at near-normal weight. Open it that day to see your exact weights.",
+        "exercises": [
+          {
+            "name": "Box Jumps (Low Volume)",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "noTarget": true,
+            "hint": "Power touch two days before racing. Smaller jumps are fine. Fast and fresh.",
+            "cue": "Fast, fresh and crisp. Stop if landings get sloppy."
+          },
+          {
+            "name": "Flat DB Bench Press",
+            "sets": 2,
+            "loadPct": 85
+          },
+          {
+            "name": "Landmine Press",
+            "sets": 2,
+            "loadPct": 85
+          },
+          {
+            "name": "Lat Pulldown",
+            "sets": 2,
+            "loadPct": 90
+          },
+          {
+            "name": "Face Pulls",
+            "sets": 2,
+            "loadPct": 100
+          }
+        ]
+      }},
+    {start:"2026-12-14", end:"2026-12-14", mode:"modified", label:"Optional Restart — Midseason Meet",
+      plan:{
+        "chip": "Optional Restart",
+        "title": "Optional Restart Lift",
+        "intro": "Optional. Only do this if you feel good after racing. Skip it if you are sore, sick or flat. If you do it, it is about 70% of the normal sets, so you ease back in. Keep the weight close to normal (your targets are on each exercise), stop every set with 3 or more reps left, and move the bar fast and crisp. Next lift goes back to normal.",
+        "dropped": [
+          "Hamstring Curl",
+          "Calf Raises"
+        ],
+        "homeNote": "optional, about 70% of the normal sets. Only if you feel good after racing.",
+        "exercises": [
+          {
+            "name": "Box Jumps (Low Volume)",
+            "sets": 3,
+            "noTarget": true,
+            "hint": "Same effort as normal. Smaller jumps are fine. Quality only, stop if landings get sloppy."
+          },
+          {
+            "name": "Split Squat",
+            "sets": 3,
+            "loadPct": 90
+          },
+          {
+            "name": "DB High Pull",
+            "sets": 3,
+            "loadPct": 90
+          },
+          {
+            "name": "Single-Leg RDL",
+            "sets": 2,
+            "loadPct": 90
+          },
+          {
+            "name": "Pull-Ups / Assisted Pull-Ups",
+            "type": "pullup",
+            "sets": 2
+          },
+          {
+            "name": "Chest-Supported Row",
+            "sets": 2,
+            "loadPct": 95
+          }
+        ]
+      }},
+    {start:"2026-12-11", end:"2026-12-11", mode:"no-lift", label:"No Lift — Midseason Meet",
+      primerOn:true,
+      primerLabel:"Optional Primer — Midseason Meet",
+      primerPlan:{
+        "chip": "Primer",
+        "title": "Optional Primer",
+        "intro": "A short, light, fast activation, about 20 minutes. Nothing here should make you sore or tired. Do it in the morning, only if your coach said go, and skip it if you feel flat or beat up.",
+        "dropped": [],
+        "homeNote": "optional 20-minute primer, only if your coach says go.",
+        "exercises": [
+          {
+            "name": "Box Jumps (Low Volume)",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "noTarget": true,
+            "hint": "Use a lower box or smaller jumps than usual, full reset every rep. Quality only.",
+            "cue": "Fast and crisp. Stop at 2 sets."
+          },
+          {
+            "name": "Split Squat",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "loadPct": 60,
+            "cue": "Light and fast. Drive up quickly and stop with plenty left."
+          },
+          {
+            "name": "DB Incline Press",
+            "sets": 2,
+            "reps": [
+              "3",
+              "3"
+            ],
+            "rest": "90 sec",
+            "loadPct": 60,
+            "cue": "Light and fast. Drive up quickly and stop with plenty left."
+          }
+        ]
+      }},
     {start:"2027-03-05", end:"2027-03-05", mode:"no-lift", label:"No Lift — Senior Champs"}
   ],
 
